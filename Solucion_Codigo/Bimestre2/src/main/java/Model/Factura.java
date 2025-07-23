@@ -13,12 +13,10 @@ import java.util.List;
  * @author Diego
  */
 public class Factura {
-
-    // Nombre del cliente al que pertenece la factura
     protected String nombreCliente;
 
-    // Lista de boletos comprados por el cliente (pueden ser normales o especiales)
     protected List<EntradaBase> boletos;
+    // Lista de boletos comprados por el cliente (pueden ser normales o especiales)
 
     // Constructor: inicializa la factura con el nombre del cliente y crea la lista vacía de boletos
     public Factura(String nombreCliente) {

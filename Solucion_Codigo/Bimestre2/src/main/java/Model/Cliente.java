@@ -10,9 +10,9 @@ package Model;
  */
 public class Cliente {
 
-    private String nombre;
-    private String cedula;
-    private Factura factura;
+    protected String nombre;
+    protected String cedula;
+    protected Factura factura;
 
     public Cliente(String nombre, String cedula) {
         this.nombre = nombre;

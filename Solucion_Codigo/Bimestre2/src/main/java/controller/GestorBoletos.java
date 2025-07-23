@@ -7,6 +7,7 @@ package controller;
 import Model.Cliente;
 import Model.EntradaBase;
 import Model.Factura;
+import View.VistaConsola;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -19,10 +20,11 @@ import java.util.List;
  */
 public class GestorBoletos {
 
+    public VistaConsola vista = new VistaConsola();
     // Lista que almacena todos los clientes registrados durante la feria
     public List<Cliente> clientes;
+ // Constructor que inicializa la lista de clientes como vacía
 
-    // Constructor que inicializa la lista de clientes como vacía
     public GestorBoletos() {
         this.clientes = new ArrayList<>();
     }
@@ -39,10 +41,8 @@ public class GestorBoletos {
         if (clientes.isEmpty()) {
             return null;
         }
-        // Se accede al último elemento con tamaño - 1
         return clientes.get(clientes.size() - 1);
     }
-
     // Devuelve la lista completa de clientes (por si se necesita fuera del gestor)
     public List<Cliente> getClientes() {
         return clientes;
@@ -50,6 +50,7 @@ public class GestorBoletos {
 
     // Genera una factura para un cliente si ya tenemos,
     //la reutilizamos y le agrega las nuevas entradas
+    
     public void generarFactura(Cliente cliente, List<EntradaBase> entradas) {
         Factura factura = cliente.getFactura();
 
@@ -62,8 +63,8 @@ public class GestorBoletos {
             factura.agregarBoleto(entrada);
         }
 
-        // Se actualiza la factura en el cliente
         cliente.setFactura(factura);
+        // Se actualiza la factura en el cliente
     }
 
     // Calcula la ganancia total sumando el total con descuento de cada factura
@@ -77,23 +78,16 @@ public class GestorBoletos {
         return total;
     }
 
-
     public int[] calcularAsistenciaPorEvento(String[] listaEventos) {
         // Se basa en las facturas de todos los clientes
-      
-  
         int[] asistencia = new int[listaEventos.length];
-          // Se crea un arreglo llamado 'asistencia' para contar cuántas personas fueron a cada evento.
+        // Se crea un arreglo llamado asistencia para contar cuántas personas fueron a cada evento.
         for (Cliente cliente : clientes) {
-
-            // Verificamos si ese cliente tiene una factura
             if (cliente.getFactura() != null) {
-
-               
                 for (EntradaBase entrada : cliente.getFactura().getBoletos()) {
-                     // Recorremos todos los boletos comprados por el cliente
+                    // Recorremos todos los boletos comprados por el cliente
                     String nombreEvento = entrada.getEvento().getNombre();
-                     // Obtenemos el nombre del evento al que corresponde ese boleto
+                    // Obtenemos el nombre del evento al que corresponde ese boleto
                     for (int i = 0; i < listaEventos.length; i++) {
                         if (listaEventos[i].equalsIgnoreCase(nombreEvento)) {
                             asistencia[i]++;
@@ -120,8 +114,7 @@ public class GestorBoletos {
                 for (EntradaBase entrada : f.getBoletos()) {
                     if (entrada.getTipo().equalsIgnoreCase("Normal")) {
                         totalNormales++;
-                    } else 
-                        if (entrada.getTipo().equalsIgnoreCase("Especial")) {
+                    } else if (entrada.getTipo().equalsIgnoreCase("Especial")) {
                         totalEspeciales++;
                     }
                 }
@@ -141,9 +134,9 @@ public class GestorBoletos {
 
         try (PrintWriter escritor = new PrintWriter(new FileWriter(reporteFeriaLoja))) {
             escritor.println(reporte);
-            System.out.println("Reporte generado en el archivo " + reporteFeriaLoja);
+            vista.mostrarMensaje("Reporte generado en el archivo " + reporteFeriaLoja);
         } catch (IOException e) {
-            System.out.println("Error al generar el reporte" + e.getMessage());
+            vista.mostrarMensaje("Error al generar el reporte" + e.getMessage());
         }
     }
 }

@@ -1,0 +1,8 @@
+REPORTE FERIA DE LOJA
+--------------------------------------
+Total de clientes: 1
+Entradas normales vendidas: 5
+Entradas especiales vendidas: 6
+Total de entradas vendidas: 11
+Recaudación final: $58,30
+

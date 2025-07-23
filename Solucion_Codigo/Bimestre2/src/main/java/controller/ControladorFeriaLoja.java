@@ -21,80 +21,83 @@ import java.util.List;
  * @author Diego
  */
 public class ControladorFeriaLoja {
+
     public VistaConsola vista = new VistaConsola();
-    //para poder interactuar con el usuario
-    
     public GestorBoletos gestor = new GestorBoletos();
-    
+
     public String[] eventosEspeciales = {
-        "Don Merardo y Sus Players",
+        "Don Medardo y Sus Players",
         "Gustavo Cerati",
         "Binomio de Oro de America",
         "Tierra Canela",
         "Hombres G"
     };
+
     public void menu() {
         int opcion;
         do {
-            System.out.println("  MENÚ PRINCIPAL FERIA DE LOJA");
-            System.out.println("[1] Registrar cliente");
-            System.out.println("[2] Comprar boletos");
-            System.out.println("[3] Ver factura");
-            System.out.println("[4] Ver asistencia por evento");
-            System.out.println("[5] Ver ganancias");
-            System.out.println("[6] Salir y obtener reporte");
+            vista.mostrarMensaje("  MENÚ PRINCIPAL FERIA DE LOJA");
+            vista.mostrarMensaje("[1] Registrar cliente");
+            vista.mostrarMensaje("[2] Comprar boletos");
+            vista.mostrarMensaje("[3] Ver factura");
+            vista.mostrarMensaje("[4] Ver asistencia por evento");
+            vista.mostrarMensaje("[5] Ver ganancias");
+            vista.mostrarMensaje("[6] Salir y obtener reporte");
             opcion = vista.leerEntero("Seleccione una opción: ");
             switch (opcion) {
                 case 1 -> {
-                    System.out.println("REGISTRO DE CLIENTE");
+                    vista.mostrarMensaje("REGISTRO DE CLIENTE");
                     registrarCliente();
                 }
                 case 2 -> {
-                    System.out.println("COMPRA DE BOLETOS");
+                    vista.mostrarMensaje("COMPRA DE BOLETOS");
                     comprarBoletos();
                 }
                 case 3 -> {
-                    System.out.println("FACTURA DEL CLIENTE");
+                    vista.mostrarMensaje("FACTURA DEL CLIENTE");
                     mostrarFactura();
                 }
                 case 4 -> {
-                    System.out.println("ASISTENCIA POR EVENTO");
+                    vista.mostrarMensaje("ASISTENCIA POR EVENTO");
                     asistenciaPorEvento();
                 }
                 case 5 -> {
-                    System.out.println("GANANCIAS DEL DÍA");
+                    vista.mostrarMensaje("GANANCIAS DEL DÍA");
                     gananciasDelDia();
                 }
                 case 6 -> {
                     gestor.generarReporte("reporteFeriaLoja.txt");
-                    System.out.println("Gracias por su tiempo");
+                    vista.mostrarMensaje("Gracias por su tiempo");
                 }
                 default -> {
-                    System.out.println("Opción inválida, intente nuevamente");
+                    vista.mostrarMensaje("Opción inválida, intente nuevamente");
                 }
             }
 
         } while (opcion != 6);
     }
+
     public void registrarCliente() {
         String nombre = vista.leerTexto("Ingrese nombre: ");
         String cedula = vista.leerTexto("Ingrese cédula: ");
         gestor.registrarCliente(nombre, cedula);
-        System.out.println("Cliente registrado correctamente.");
+        vista.mostrarMensaje("Cliente registrado correctamente.");
     }
 
     public void comprarBoletos() {
         Cliente cliente = gestor.obtenerUltimoCliente();
         if (cliente == null) {
-            System.out.println("Debe registrar un cliente antes.");
+            vista.mostrarMensaje("Debe registrar un cliente antes.");
             return;
         }
         List<EntradaBase> entradas = new ArrayList<>();
 
         for (String ev : eventosEspeciales) {
-            System.out.println("Evento: " + ev); //recorremos y presentamos los ev
+            vista.mostrarMensaje("Evento: " + ev); //recorremos y presentamos los ev
         }
-        int opcion = vista.leerEntero("1 para entrada normal, 2 para especial (conciertos): ");
+        int opcion = vista.leerEntero("1 para entrada normal, "
+                + "2 para especial (conciertos): ");
+
         String eventoNombre;
         EventoBase evento;
 
@@ -110,7 +113,7 @@ public class ControladorFeriaLoja {
             case 2:
                 eventoNombre = vista.leerTexto("Nombre del evento: ");
                 if (!validarEvento(eventoNombre)) {
-                    System.out.println("Evento no válido.");
+                    vista.mostrarMensaje("Evento no válido.");
                     return;
                 }
                 evento = new EventoEspecial(eventoNombre, null); // (fecha no definida por ahora)
@@ -120,25 +123,24 @@ public class ControladorFeriaLoja {
                 }
                 break;
 
-            
             default:
-                System.out.println("Opción inválida.");
+                vista.mostrarMensaje("Opción inválida.");
                 return;
         }
 
         gestor.generarFactura(cliente, entradas);
-        System.out.println("Boletos comprados con éxito."); // y factura generada
-    } 
+        vista.mostrarMensaje("Boletos comprados con éxito."); // y factura generada
+    }
 
     protected void mostrarFactura() {
         Cliente cliente = gestor.obtenerUltimoCliente();
         if (cliente == null || cliente.getFactura() == null) {
-            System.out.println("No hay factura registrada.");
+            vista.mostrarMensaje("No hay factura registrada.");
             return;
         }
 
         Factura fac = cliente.getFactura();
-        System.out.println("Factura de: " + cliente.getNombre());
+        vista.mostrarMensaje("Factura de: " + cliente.getNombre());
 
         // Variables auxiliares locales solo para conteo
         int normales = 0;
@@ -148,10 +150,10 @@ public class ControladorFeriaLoja {
 
         // Recorrer las entradas compradas
         for (EntradaBase e : fac.getBoletos()) {
-            System.out.printf("Tipo: %s - Evento: %s - Precio: %.2f\n",
-                    e.getTipo(), e.getEvento().getNombre(), e.calcularPrecioFinal());
+            vista.mostrarMensaje(String.format("Tipo: %s - Evento:"
+                    + " %s - Precio: %.2f\n",
+                    e.getTipo(), e.getEvento().getNombre(), e.calcularPrecioFinal()));
 
-         
             if (e.getTipo().equalsIgnoreCase("Normal")) {
                 normales++;
                 totalNormales += e.calcularPrecioFinal();
@@ -165,21 +167,22 @@ public class ControladorFeriaLoja {
         double total = fac.calcularTotal();
         double totalConDescuento = fac.calcularTotalConDescuento();
         double descuento = total - totalConDescuento;
-        System.out.printf("Entradas normales: %d - Subtotal: %.2f\n", normales, totalNormales);
-        System.out.printf("Entradas especiales: %d - Subtotal: %.2f\n", especiales, totalEspeciales);
-        System.out.printf("Descuento aplicado: %.2f\n", descuento);
-        System.out.printf("TOTAL A PAGAR: %.2f\n", totalConDescuento);
+        vista.mostrarMensaje(String.format("Entradas normales: %d - Subtotal: %.2f\n", normales, totalNormales));
+        vista.mostrarMensaje(String.format("Entradas especiales: %d - Subtotal: %.2f", especiales, totalEspeciales));
+        vista.mostrarMensaje(String.format("Descuento aplicado: %.2f", descuento));
+        vista.mostrarMensaje(String.format("TOTAL A PAGAR: %.2f", totalConDescuento));
     }
 
     public void asistenciaPorEvento() {
         int[] asistencia = gestor.calcularAsistenciaPorEvento(eventosEspeciales);
         for (int i = 0; i < eventosEspeciales.length; i++) {
-            System.out.printf("%s: %d personas\n", eventosEspeciales[i], asistencia[i]);
+            vista.mostrarMensaje(String.format("%s: %d personas", eventosEspeciales[i], asistencia[i]));
         }
     }
+
     public void gananciasDelDia() {
         double total = gestor.calcularGanancias();
-        System.out.printf("Ganancia total: %.2f\n", total);
+        vista.mostrarMensaje(String.format("Ganancia total: %.2f", total));
     }
 
     // Valida que el evento ingresado exista en la lista de eventos especiales
@@ -191,4 +194,5 @@ public class ControladorFeriaLoja {
         }
         return false;
     }
+
 }
