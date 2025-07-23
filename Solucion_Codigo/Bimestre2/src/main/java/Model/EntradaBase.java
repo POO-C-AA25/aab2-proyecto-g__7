@@ -4,7 +4,6 @@
  */
 package Model;
 
-
 /**
  *
  * @author Diego

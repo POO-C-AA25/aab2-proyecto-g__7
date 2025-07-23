@@ -3,14 +3,14 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package Ejecutor;
- import controller.ControladorFeriaLoja;
+
+import controller.ControladorFeriaLoja;
+
 /**
  *
  * @author Diego
  */
 public class EjecutorFeriaLoja {
-   
-
 
     public static void main(String[] args) {
         ControladorFeriaLoja feria = new ControladorFeriaLoja();

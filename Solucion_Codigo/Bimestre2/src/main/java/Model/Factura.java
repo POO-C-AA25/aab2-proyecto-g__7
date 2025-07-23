@@ -13,6 +13,7 @@ import java.util.List;
  * @author Diego
  */
 public class Factura {
+
     protected String nombreCliente;
 
     protected List<EntradaBase> boletos;

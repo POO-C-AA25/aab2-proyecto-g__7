@@ -6,7 +6,6 @@ package Model;
 
 import java.time.LocalDate;
 
-
 /**
  *
  * @author Diego

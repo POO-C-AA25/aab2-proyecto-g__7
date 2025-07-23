@@ -14,12 +14,11 @@ public abstract class EventoBase {
 
     protected String nombre;
     protected LocalDate fecha;
-   
 
     public EventoBase(String nombre, LocalDate fecha) {
         this.nombre = nombre;
         this.fecha = fecha;
-      
+
     }
 
     public String getNombre() {
@@ -29,7 +28,6 @@ public abstract class EventoBase {
     public LocalDate getFecha() {
         return fecha;
     }
-
 
     public abstract boolean esEspecial();
 }

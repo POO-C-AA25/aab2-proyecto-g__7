@@ -23,7 +23,7 @@ public class GestorBoletos {
     public VistaConsola vista = new VistaConsola();
     // Lista que almacena todos los clientes registrados durante la feria
     public List<Cliente> clientes;
- // Constructor que inicializa la lista de clientes como vacía
+    // Constructor que inicializa la lista de clientes como vacía
 
     public GestorBoletos() {
         this.clientes = new ArrayList<>();
@@ -43,6 +43,7 @@ public class GestorBoletos {
         }
         return clientes.get(clientes.size() - 1);
     }
+
     // Devuelve la lista completa de clientes (por si se necesita fuera del gestor)
     public List<Cliente> getClientes() {
         return clientes;
@@ -50,7 +51,6 @@ public class GestorBoletos {
 
     // Genera una factura para un cliente si ya tenemos,
     //la reutilizamos y le agrega las nuevas entradas
-    
     public void generarFactura(Cliente cliente, List<EntradaBase> entradas) {
         Factura factura = cliente.getFactura();
 
