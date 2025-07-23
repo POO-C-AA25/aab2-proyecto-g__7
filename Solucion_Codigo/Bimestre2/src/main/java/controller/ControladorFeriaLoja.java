@@ -27,7 +27,7 @@ public class ControladorFeriaLoja {
     public GestorBoletos gestor = new GestorBoletos();
     
     public String[] eventosEspeciales = {
-        "Don Merardo y Sus Players",
+        "Don Medardo y Sus Players",
         "Gustavo Cerati",
         "Binomio de Oro de America",
         "Tierra Canela",
