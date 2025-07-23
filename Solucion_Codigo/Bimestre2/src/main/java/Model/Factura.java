@@ -57,4 +57,9 @@ public class Factura {
     public int calcularAfluencia() {
         return boletos.size();
     }
+    
+    /*
+    La clase Factura tiene una sola responsabilidad: Administrar los boletos 
+    de un cliente y calcular totales de la compra.
+    */
 }

@@ -35,4 +35,10 @@ public abstract class EntradaBase {
     public abstract double calcularPrecioFinal();
 
     public abstract String getTipo();
+    /* Se cumple el principio de Open/Close porque se puede agregar un nuevo tipo de entrada 
+    sin modificar el codigo base, solo extendiendolo. 
+    cumple el principio por los metodos abstractos de calcularPrecioFinal y de getTipo
+    Eso permite que otras clases (como EntradaNormal o EntradaEspecial) extiendan EntradaBase 
+    y personalicen el comportamiento, sin tener que modificar la clase base.
+    */
 }

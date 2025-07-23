@@ -65,6 +65,8 @@ public class GestorBoletos {
 
         cliente.setFactura(factura);
         // Se actualiza la factura en el cliente
+        // Este código tiene como propósito agregar una lista 
+        // de boletos a una factura y luego asociar esa factura al cliente
     }
 
     // Calcula la ganancia total sumando el total con descuento de cada factura

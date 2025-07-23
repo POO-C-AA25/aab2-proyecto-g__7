@@ -34,4 +34,9 @@ public class Cliente {
     public void setFactura(Factura factura) {
         this.factura = factura;
     }
+    /* Se aplica el principio S de Single Responsability porque solo se maneja los datos
+    del cliente, no se encarga de imprimir ni de generar facturas 
+    La clase tiene una única responsabilidad clara: 
+    Representar a un cliente, con sus datos personales y su factura asociada y no genera facturas
+    */
 }
